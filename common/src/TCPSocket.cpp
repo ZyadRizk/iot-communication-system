@@ -93,15 +93,26 @@ void TCPSocket::Receive() {
     int fd = (clientSocketFd > 0) ? clientSocketFd : socketFd;
     char buffer[1024] = {0};
     ssize_t bytesRead = recv(fd, buffer, sizeof(buffer) - 1, 0);
-    if (bytesRead < 0) { 
-        
-    }
     if (bytesRead < 0) {
         throw std::runtime_error("Failed to receive TCP message");
     } else if (bytesRead == 0) {
         isConnected = false;
         throw std::runtime_error("Connection closed by peer");
     }
-
     std::string(buffer, bytesRead);
+
+    std::cout << "Received " << bytesRead << " bytes: " << buffer << std::endl; //debug
+}
+
+void TCPSocket::Shutdown() {
+    if (clientSocketFd != -1) {
+        close(clientSocketFd);
+        clientSocketFd = -1;
+    }
+    if (socketFd != -1) {
+        close(socketFd);
+        socketFd = -1;
+    }
+    isConnected = false;
+    std::cout << "TCP Socket has been shut down" << std::endl; //debug
 }
