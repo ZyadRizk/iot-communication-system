@@ -32,7 +32,6 @@ UDPSocket::~UDPSocket() {
     Shutdown();
 }
 
-
 void UDPSocket::BindSocket() {
     if (bind(socketFd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0) {
         throw std::runtime_error("Failed to bind UDP socket");

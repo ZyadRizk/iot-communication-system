@@ -13,7 +13,7 @@ public:
     // Constructor
     Socket(const std::string& ip, unsigned short p) 
         : socketFd(-1), ipAddress(ip), port(p), isConnected(false) {}
-    virtual ~Socket() ;
+    virtual ~Socket(){} ;
 
     virtual void WaitForConnect() = 0;
     virtual void Connect() = 0;

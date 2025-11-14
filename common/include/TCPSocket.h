@@ -18,6 +18,8 @@ private:
     int clientSocketFd;  // For server: connected client socket
     struct sockaddr_in serverAddr;
     struct sockaddr_in clientAddr;
+    bool isBound;       // Track if socket is bound
+    bool isListening;   // Track if socket is listening
 public:
     // Constructor
     TCPSocket(const std::string& ip, uint16_t port);

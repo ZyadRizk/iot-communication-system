@@ -32,22 +32,32 @@ TCPSocket::~TCPSocket() {
     Shutdown();
 }
 
-// Bind and listen method
+// Private: Bind and listen
 void TCPSocket::BindAndListen(int backlog) {
-    // Step 3: Bind the socket to the specified IP and port
-    if (bind(socketFd, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
-        throw std::runtime_error("Bind failed!");
+    // Only bind if not already bound
+    if (!isBound) {
+        // Step 3: Bind the socket to the specified IP and port
+        if (bind(socketFd, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
+            throw std::runtime_error("Bind failed!");
+        }
+        isBound = true;
+        std::cout << "Server: Socket has been bound successfully to " 
+                  << ipAddress << ":" << port << std::endl;
     }
-    std::cout<<"Server : Socket has been binded successfully \n"; //debug
-    // Step 4: Listen for incoming connections
-    if (listen(socketFd, backlog) < 0) {
-        throw std::runtime_error("Listen failed!"); 
-    std::cout<<"Server : listening \n"; //debug 
+    
+    // Only listen if not already listening
+    if (!isListening) {
+        // Step 4: Listen for incoming connections
+        if (listen(socketFd, backlog) < 0) {
+            throw std::runtime_error("Listen failed!"); 
+        }
+        isListening = true;
+        std::cout << "Server: Listening for connections (backlog=" << backlog << ")" << std::endl;
     }
-
 }
 
 int TCPSocket::AcceptConnection() {
+    std::cout << "Server: Waiting for client connection..." << std::endl; //debug
     socklen_t addrLen = sizeof(clientAddr);
     clientSocketFd = accept(socketFd, (struct sockaddr*)&clientAddr, &addrLen);
     if (clientSocketFd < 0) {
@@ -60,13 +70,17 @@ int TCPSocket::AcceptConnection() {
     return clientSocketFd;
 }
 
+// Public: Wait for connection (Server mode)
 void TCPSocket::WaitForConnect() {
+    BindAndListen();
     AcceptConnection();
 }
 
+// Public: Connect to server (Client mode)
 void TCPSocket::Connect() {
     // Step 3: Connect to the server
-    if (connect(clientSocketFd, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
+    std::cout << "Connecting to TCP server at " << ipAddress << ":" << port << "..." << std::endl; //debug
+    if (connect(socketFd, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
         throw std::runtime_error("Connection failed!");
     }
     std::cout << "Connected to TCP server at " << ipAddress << ":" << port << std::endl; //debug
