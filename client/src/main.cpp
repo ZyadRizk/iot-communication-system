@@ -12,6 +12,10 @@ int main(){
     clientChannel client(tcp);
     clientApp app(&client);
     app.startConnection();
+    if(!client.getRunningStatus()){
+        std::cerr << "Failed to start client channel" << std::endl;
+        return -1;
+    }
     try{
         while (true)
         {
