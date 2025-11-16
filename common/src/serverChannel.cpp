@@ -35,10 +35,10 @@ void ServerChannel::Send(const std::string& message) {
     channelSocket->Send(message);
 }
 
-void ServerChannel::Receive(){
+std::string ServerChannel::Receive(){
     if(!isRunning){
         throw std::runtime_error("ServerChannel not running");
     }
-    channelSocket->Receive();
+    return channelSocket->Socket::Receive();
 }
 

@@ -27,7 +27,7 @@ public:
     void WaitForConnect() override;
     void Connect() override;
     void Send(const std::string& message) override;
-    void Receive() override;
+    std::string Receive() override;
     void Shutdown() override;
 
     // UDP-specific methods

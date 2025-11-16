@@ -18,7 +18,7 @@ public:
     virtual void WaitForConnect() = 0;
     virtual void Connect() = 0;
     virtual void Send(const std::string& message) = 0;
-    virtual void Receive() = 0;
+    virtual std::string Receive() = 0;
     virtual void Shutdown() = 0;
 
     // Concrete helper methods

@@ -100,7 +100,7 @@ void TCPSocket::Send(const std::string& message) {
     std::cout << "Sent " << bytesSent << " bytes: " << message << std::endl; //debug
 }
 
-void TCPSocket::Receive() {
+std::string TCPSocket::Receive() {
     if (!isConnected) {
         throw std::runtime_error("Socket not connected");
     }
@@ -114,8 +114,8 @@ void TCPSocket::Receive() {
         throw std::runtime_error("Connection closed by peer");
     }
     std::string(buffer, bytesRead);
-
     std::cout << "Received " << bytesRead << " bytes: " << buffer << std::endl; //debug
+    return std::string(buffer, bytesRead);
 }
 
 void TCPSocket::Shutdown() {

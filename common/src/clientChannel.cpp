@@ -5,7 +5,7 @@ clientChannel::~clientChannel(){
     if(isRunning){
         Stop();
     }
-    std::cout << "CLientChannel destroyed" << std::endl; //debug
+    std::cout << "CLient Channel destroyed" << std::endl; //debug
 }
 
 void clientChannel::Start(){
@@ -21,14 +21,14 @@ void clientChannel::Send(const std::string& message){
     if(!isRunning){
         throw std::runtime_error("ServerChannel not running");
     }
-    channelSocket->Send(message);
+    channelSocket->Socket::Send(message);
 }
 
-void clientChannel::Receive(){
+std::string clientChannel::Receive(){
     if(!isRunning){
         throw std::runtime_error("ServerChannel not running");
     }
-    channelSocket->Receive();
+    return channelSocket->Socket::Receive();
 }
 
 void clientChannel::Stop(){

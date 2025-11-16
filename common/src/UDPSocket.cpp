@@ -64,7 +64,7 @@ void UDPSocket::Send(const std::string& message) {\
     }
 }
 
-void UDPSocket::Receive() {
+std::string UDPSocket::Receive() {
     char buffer[1024];
     ssize_t bytesReceived = recvfrom(socketFd, buffer, sizeof(buffer) - 1, 0,
         (struct sockaddr*)&cliaddr, &clientAddrLen);
@@ -73,6 +73,7 @@ void UDPSocket::Receive() {
     }
     buffer[bytesReceived] = '\0'; // Null-terminate the received data
     std::cout << "Received UDP message: " << buffer << std::endl; //debug
+    return std::string(buffer, bytesReceived);
 }
 
 void UDPSocket::Shutdown() {

@@ -31,7 +31,7 @@ public:
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual void Send(const std::string& message) = 0;
-    virtual void Receive() = 0;
+    virtual std::string Receive() = 0;
 
     // Concrete methods
     bool getRunningStatus() const { return isRunning; }

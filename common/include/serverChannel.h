@@ -19,7 +19,7 @@ public:
     void Start() override ;
     void Stop() override ;
     void Send(const std::string& message) override ;
-    void Receive() override ;
+    std::string Receive() override ;
     bool getRunningStatus() const { return isRunning; }
 
 };
