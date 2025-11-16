@@ -4,6 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "/home/zyad/project/iot-communication-system/include",
                 "/home/zyad/project/iot-communication-system/include"
             ],
             "defines": [],
