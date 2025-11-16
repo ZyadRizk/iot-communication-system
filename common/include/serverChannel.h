@@ -9,12 +9,12 @@
  * Responsibilities: Manage server-side communication through channelSocket
  * This is a THIN WRAPPER - no business logic here!
  */
-class ServerChannel : public Channel {
+class serverChannel : public Channel {
 public:
     // Constructor
-    ServerChannel(Socket* socket) : Channel(socket){} ;
+    serverChannel(Socket* socket) : Channel(socket){} ;
     // Destructor
-    virtual ~ServerChannel() override;
+    virtual ~serverChannel() override;
     // Override virtual methods
     void Start() override ;
     void Stop() override ;
